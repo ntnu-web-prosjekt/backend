@@ -1,0 +1,33 @@
+{
+  "_id": 0,
+  "name": {
+    "firstname": "John",
+    "lastname": "Cena"
+  },
+  "email": "John@Cena.ko",
+  "phone": 88888888,
+  "password": "JohnCena123",
+  "approvedbyadmin": true,
+  "university": "NTNU i Gjøvik",
+  "degree": "Bachelor Computer Science",
+  "Tags": ["Javascript", "HTML", "CSS", "JSON", "PHP"],
+  "description": "AND HIS NAME IS JOHN CENA!",
+
+  "role": "0=professor, 1=school-admin",
+  "ownedrequests": ["requestId", 0, 12, 15, 18],
+  "appliedrequests": {
+    "requestId": "approved or not",
+    "4": true,
+    "8": true,
+    "14": false,
+    "19": true
+  },
+  "notes": {
+    "userId": "note-text",
+    "1": "Nice guy",
+    "2": "oof",
+    "3": "nice"
+  },
+
+  "offersfromothers": { "userId": ["requestId"], "1": [23, 27, 29, 45] }
+}

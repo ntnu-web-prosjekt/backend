@@ -1,0 +1,18 @@
+{
+  "_requestid": 0,
+  "ownerId": 0,
+  "name": "HTML Basics easy 101",
+  "code": "IDG2132",
+  "description": "Easy html",
+  "location": "NTNU i Gjøvik",
+  "Tags": ["HTML", "JS", "JavaScript", "CSS"],
+  "startdate": "24.03.2022",
+  "enddate": "12.05.2022",
+  "url": "https://www.ntnu.no/",
+  "level": "Bachelor",
+  "examinatorlevel": "Master",
+
+  "active": true,
+  "examinatorid": [24, 21, 26],
+  "examinatorapproved": false
+}
