@@ -16,7 +16,7 @@ const registerUser = async (req, res) => {
     name: { firstName: req.body.firstName, lastName: req.body.lastName },
     email: req.body.email,
     phone: req.body.phone,
-    password: hashPwd,
+    password: hashPwd, // hashed password with bcryptjs
     degree: req.body.degree,
     university: req.body.university,
     tags: req.body.tags,
