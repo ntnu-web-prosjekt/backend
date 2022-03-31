@@ -22,7 +22,9 @@ const getUserInfo = async (req, res) => {
 
 const getUserDetails = async (req, res) => {
   try {
-    const userInfo = await User.findById(req.body.id);
+    const userInfo = await User.findById(req.body.id).select(
+      "-__v -role -approvedByAdmin"
+    );
 
     if (!userInfo) {
       res.status(400);
