@@ -1,5 +1,4 @@
 const User = require("../schemas/myProfileSchema.js");
-
 const bcrypt = require("bcryptjs");
 
 const getUserInfo = async (req, res) => {
@@ -38,6 +37,7 @@ const getUserDetails = async (req, res) => {
   }
 };
 
+//needs cleanup, check logic
 const updateUserPwd = async (req, res) => {
   const oldPassword = await User.findById(req.body.id).select("password");
   const salt = await bcrypt.genSalt(10);
