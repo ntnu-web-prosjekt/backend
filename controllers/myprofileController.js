@@ -95,7 +95,7 @@ const updateUserInfo = async (req, res) => {
     });
     console.log(req.body.details);
     // res.json(updateInfo);
-    res.redirect(303, "/myprofile/settings");
+    res.redirect("/myprofile/settings");
   } catch (error) {
     res.status(400).send(error.message);
   }
