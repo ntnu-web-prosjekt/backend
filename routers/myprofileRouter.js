@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const {
-  doSomeTest,
   getUserInfo,
   getUserDetails,
   updateUserInfo,
   updateUserPwd,
+  logoutUser,
 } = require("../controllers/myprofileController.js");
 
 // GET - retrives the public data about the logged in user
@@ -21,6 +21,6 @@ router.put("/settings/update/data", updateUserInfo);
 router.put("/settings/update/pwd", updateUserPwd);
 
 // POST - signing out the user
-router.post("/signout", doSomeTest);
+router.post("/signout", logoutUser);
 
 module.exports = router;
