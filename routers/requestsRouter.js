@@ -8,11 +8,20 @@ router.get("/myrequests", doSomeTest);
 // GET - Retrieves who is requesting the signed in users help and who is offering the signed in user help
 router.get("/inbox", doSomeTest);
 
-// POST - Creates a new request
+// GET - Get details/info of a request
+router.get("/details/:id", doSomeTest);
+
+// POST - Creates a new request // HENRIK😎
 router.post("/create", doSomeTest);
 
 // PUT - Updates an existing request
 router.put("/update/:id", doSomeTest);
+
+// PUT - Accepts a request in the inbox
+router.put("/accept/request/:id", doSomeTest);
+
+// PUT - Accepts a offer in the inbox
+router.put("/accept/offer/:id", doSomeTest);
 
 // DELETE - Deletes an existing request
 router.delete("/delete/:id", doSomeTest);

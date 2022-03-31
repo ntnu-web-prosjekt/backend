@@ -7,7 +7,7 @@ const myProfileSchema = new mongoose.Schema(
       lastName: { type: String, required: true },
     },
     email: { type: String, required: true },
-    phone: { type: Number, required: true },
+    phone: { type: String, required: true },
     password: { type: String, required: true },
     approvedByAdmin: { type: Boolean, default: false },
     university: { type: String, required: true },
