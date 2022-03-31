@@ -15,21 +15,35 @@ const myProfileSchema = new mongoose.Schema({
   description: { type: String, default: "" },
   role: { type: Number, default: 0 },
   ownedrequests: { type: Array, default: [] },
+});
+
+const appliedSchema = new mongoose.Schema({
   appliedRequests: {
-    requestID: { type: Number, required: false },
-    status: { type: Boolean, default: false },
-    default: {},
-  },
-  notes: {
-    userID: { type: Number, required: false },
-    noteText: { type: String, required: false },
-    default: {},
-  },
-  offersFromOthers: {
-    userID: { type: Number, required: false },
-    requestID: { type: Number, required: false },
+    requestID: { type: Number, required: true },
+    status: { type: Boolean, default: true },
     default: {},
   },
 });
 
-module.exports = mongoose.model("users", myProfileSchema);
+const offersFromOthersSchema = new mongoose.Schema({
+  offersFromOthers: {
+    userID: { type: Number, required: true },
+    requestID: { type: Number, required: true },
+    default: {},
+  },
+});
+
+const notesSchema = new mongoose.Schema({
+  notes: {
+    userID: { type: Number, required: true },
+    noteText: { type: String, required: true },
+    default: {},
+  },
+});
+
+module.exports = [
+  mongoose.model("users", myProfileSchema),
+  mongoose.model("appliedRequests", appliedSchema),
+  mongoose.model("offers", offersFromOthersSchema),
+  mongoose.model("notes", notesSchema),
+];
