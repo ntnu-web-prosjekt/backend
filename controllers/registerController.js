@@ -9,11 +9,15 @@ const registerUser = async (req, res) => {
   //check if the user already exists
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) {
-    res.status(400);
-    throw new Error("Email already exists");
+    res.status(400).send("Email already exists");
+    return;
   }
+
   const user = new User({
-    name: { firstName: req.body.firstName, lastName: req.body.lastName },
+    name: {
+      firstName: req.body.name.firstName,
+      lastName: req.body.name.lastName,
+    },
     email: req.body.email,
     phone: req.body.phone,
     password: hashPwd, // hashed password with bcryptjs
@@ -21,6 +25,9 @@ const registerUser = async (req, res) => {
     university: req.body.university,
     tags: req.body.tags,
     description: req.body.description,
+    appliedRequests: {},
+    offersFromOthers: {},
+    notes: {},
   });
   try {
     const savedUser = await user.save();
@@ -29,11 +36,6 @@ const registerUser = async (req, res) => {
     res.status(400).send(error.message);
   }
 };
-
-/**
- * Description of function...
- *
- */
 
 module.exports = {
   registerUser,
