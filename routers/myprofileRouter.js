@@ -4,6 +4,7 @@ const {
   doSomeTest,
   getUserInfo,
   getUserDetails,
+  updateUserInfo,
 } = require("../controllers/myprofileController.js");
 
 // GET - retrives the public data about the logged in user
@@ -13,7 +14,7 @@ router.get("/view", getUserInfo);
 router.get("/settings", getUserDetails);
 
 // PUT - saves changes made to the signed in users profile data
-router.put("/settings/update/data", doSomeTest);
+router.put("/settings/update/data", updateUserInfo);
 
 // PUT - updates the signed in users password
 router.put("/settings/update/pwd", doSomeTest);

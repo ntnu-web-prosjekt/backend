@@ -36,6 +36,16 @@ const getUserDetails = async (req, res) => {
   }
 };
 
+// not finished yet, need to set update values
+const updateUserInfo = async (req, res) => {
+  try {
+    const updateInfo = await User.updateOne({ _id: req.body.id }, { $set: {} });
+    res.json(updateInfo);
+  } catch (error) {
+    res.json({ msg: error.message });
+  }
+};
+
 const doSomeTest = async (req, res) => {
   try {
     const testResult = await Test.find();
@@ -57,4 +67,5 @@ module.exports = {
   doSomeTest,
   getUserInfo,
   getUserDetails,
+  updateUserInfo,
 };
