@@ -16,18 +16,18 @@ const myProfileSchema = new mongoose.Schema({
   role: { type: Number, default: 0 },
   ownedrequests: { type: Array, default: [] },
   appliedRequests: {
-    requestID: { type: Number, required: true },
+    requestID: { type: Number, required: false },
     status: { type: Boolean, default: false },
     default: {},
   },
   notes: {
-    userID: { type: Number, required: true },
-    noteText: { type: String, required: true },
+    userID: { type: Number, required: false },
+    noteText: { type: String, required: false },
     default: {},
   },
   offersFromOthers: {
-    userID: { type: Number, required: true },
-    requestID: { type: Number, required: true },
+    userID: { type: Number, required: false },
+    requestID: { type: Number, required: false },
     default: {},
   },
 });

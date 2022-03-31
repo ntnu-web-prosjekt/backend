@@ -17,8 +17,8 @@ async function signJWT() {
   console.log(jwt);
 }
 
-async function verifyJWT(_JWT) {
-  const { payload, protectedHeader } = await jose.jwtVerify(_JWT, publicKey, {
+async function verifyJWT(_JWT, _publicKey) {
+  const { payload, protectedHeader } = await jose.jwtVerify(_JWT, _publicKey, {
     issuer: "urn:example:issuer",
     audience: "urn:example:audience",
   });
