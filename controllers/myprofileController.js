@@ -51,7 +51,7 @@ const updateUserPwd = async (req, res) => {
     return;
   }
 
-  const confirmPassword = await bcrypt.hash(req.body.password, salt);
+  const confirmPassword = await bcrypt.hash(req.body.confirmPassword, salt);
   const newPassword = await bcrypt.hash(req.body.newPassword, salt);
 
   if (oldPassword !== confirmPassword) {
