@@ -88,14 +88,14 @@ const updateUserInfo = async (req, res) => {
     res.status(403).send("Something went wrong, please try again later");
     return;
   }
-
+    // change to then then then, await is to slow - lefty
   try {
     const updateInfo = await User.findByIdAndUpdate(req.body.id, {
       $set: updateQuery.details,
     });
     console.log(req.body.details);
-    // res.json(updateInfo);
-    res.redirect("/myprofile/settings");
+    res.json(updateInfo);
+    // res.redirect("/myprofile/settings");
   } catch (error) {
     res.status(400).send(error.message);
   }
