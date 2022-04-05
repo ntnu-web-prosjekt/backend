@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { doSomeTest } = require("../controllers/requestsController.js");
+const { doSomeTest, createRequest } = require("../controllers/requestsController.js");
 
 // GET - Retrieves the signed in users own requests and undertaken requests
 router.get("/myrequests", doSomeTest);
@@ -12,7 +12,7 @@ router.get("/inbox", doSomeTest);
 router.get("/details/:id", doSomeTest);
 
 // POST - Creates a new request // HENRIK😎
-router.post("/create", doSomeTest);
+router.post("/create", createRequest);
 
 // PUT - Updates an existing request
 router.put("/update/:id", doSomeTest);
