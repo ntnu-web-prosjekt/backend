@@ -1,4 +1,5 @@
 const Request = require("../schemas/requestsSchema.js");
+const User = require("../schemas/myProfileSchema.js");
 
 const doSomeTest = async (req, res) => {
   try {
@@ -68,6 +69,24 @@ const applyRequest = async (req, res) => {
 
     // The user have not applied for this request yet
     const updateRequest = await Request.findByIdAndUpdate(req.params.id, { $push: { examinatorId : req.body.user_id } });
+
+    // Variables for updating user data
+    const requestId = req.params.id;
+    const requestObj = {
+      [requestId]: false
+    }
+
+    // Updates the users data in the DB with their new request
+    const updateUsersRequests = await User.findByIdAndUpdate(req.body.user_id,
+      [{"$set":{
+        "appliedRequests":{
+          "$mergeObjects":[
+            "$appliedRequests",
+            requestObj
+          ]
+        }
+      }}]
+    );
 
     res.status(200).json({ "msg": "Request was applied." });
 
