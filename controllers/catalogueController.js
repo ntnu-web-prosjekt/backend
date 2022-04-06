@@ -58,7 +58,19 @@ const viewRequest = async (req, res) => {
 */
 const applyRequest = async (req, res) => {
   try {
-  
+    // Checking if user already applied
+    const alreadyApplied = await Request.findOne({ _id: req.params.id, examinatorId: {$in: req.body.user_id}});
+
+    if (alreadyApplied) {
+      res.status(400).json({ "msg": "This request is already applied." });
+      return;
+    }
+
+    // The user have not applied for this request yet
+    const updateRequest = await Request.findByIdAndUpdate(req.params.id, { $push: { examinatorId : req.body.user_id } });
+
+    res.status(200).json({ "msg": "Request was applied." });
+
   } catch (error) {
     res.status(400).json({ "msg": error.message });
   }
