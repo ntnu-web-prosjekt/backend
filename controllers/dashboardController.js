@@ -15,6 +15,16 @@ const doSomeTest = async (req, res) => {
   }
 };
 
+const dashboardData = async (req, res) => {
+  try {
+   
+  } catch (error) {
+    res.json({
+      msg: error.message,
+    });
+  }
+};
+
 module.exports = {
-  doSomeTest,
+  doSomeTest, dashboardData
 };
