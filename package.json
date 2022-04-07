@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.0",
     "jose": "^4.6.0",
     "mongodb": "^4.4.1",
-    "mongoose": "^6.2.8"
+    "mongoose": "^6.2.8",
+    "password-hash": "^1.2.2"
   },
   "devDependencies": {
     "cors": "^2.8.5",
