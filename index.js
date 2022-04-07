@@ -6,6 +6,7 @@ const connectDB = require("./connectDB");
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const User = require("./schemas/myProfileSchema");
 
 // Body parser
 app.use(express.json());
@@ -32,17 +33,13 @@ function verifyLogin(credentials) {
   var passwordHash = require("password-hash");
   var username = credentials.username;
   var password = credentials.password;
+  var passwordFromDatabase;
 
-  console.log(connectDB);
-
-  var passwordFromDatabase = connectDB.connection.findOne(
-    { email: username },
-    "password"
-  );
-
-  //   console.log(username, password, passwordFromDatabase);
-
-  return passwordHash.verify(password, passwordFromDatabase);
+  User.findOne({ email: username }, "password").then((res) => {
+    passwordFromDatabase = res.password;
+    console.log(username, password, passwordFromDatabase);
+    return passwordHash.verify(password, passwordFromDatabase);
+  });
 }
 
 app.use("/login", (req, res) => {
