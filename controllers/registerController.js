@@ -1,6 +1,7 @@
 const User = require("../schemas/myProfileSchema.js");
 
 // const bcrypt = require("bcryptjs");
+const passwordHash = require("password-hash");
 
 const registerUser = async (req, res) => {
   // const salt = await bcrypt.genSalt(10);
