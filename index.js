@@ -1,11 +1,15 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const connectDB = require("./connectDB");
+var cors = require("cors");
 
 // Initializing server
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+//Enable all cors requests
+app.use(cors());
 
 // Body parser
 app.use(express.json());

@@ -7,14 +7,14 @@ const requestsSchema = new mongoose.Schema({
   description: { type: String, required: true },
   location: { type: String, required: true },
   tags: { type: Array },
-  startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true },
+  startDate: { type: String, required: true },
+  endDate: { type: String, required: true },
   url: { type: String, default: "https://www.ntnu.no/" },
   level: { type: String, required: true },
   examinatorLevel: { type: String, required: true },
   active: { type: Boolean, default: false },
   examiatorId: { type: Array },
-  examinatorApproved: { type: Boolean, default: false },
+  examinatorApproved: { type: Number, default: null },
 });
 
 module.exports = mongoose.model("requests", requestsSchema);
