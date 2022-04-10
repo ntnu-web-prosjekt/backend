@@ -1,4 +1,4 @@
-const User = require("../models/myProfileModel.js");
+const User = require("../schemas/myprofileSchema.js");
 
 const bcrypt = require("bcryptjs");
 
