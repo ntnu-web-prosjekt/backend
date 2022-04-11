@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const requestsSchema = new mongoose.Schema({
-  ownerId: { type: Number, required: true },
+  ownerId: { type: mongoose.Schema.Types.ObjectId, required: true },
   name: { type: String, required: true },
   code: { type: String, required: true },
   description: { type: String, required: true },
@@ -14,7 +14,7 @@ const requestsSchema = new mongoose.Schema({
   examinatorLevel: { type: String, required: true },
   active: { type: Boolean, default: false },
   examinatorId: { type: Array },
-  examinatorApproved: { type: Boolean, default: false },
+  examinatorApproved: { type: mongoose.Schema.Types.ObjectId, default: null }
 });
 
 module.exports = mongoose.model("requests", requestsSchema);
