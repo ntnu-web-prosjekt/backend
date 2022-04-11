@@ -29,5 +29,7 @@
     "3": "nice"
   },
 
-  "offersfromothers": { "userId": ["requestId"], "1": [23, 27, 29, 45] }
+  "offersfromothers": { "userId": ["requestId"], "1": [23, 27, 29, 45] },
+
+  "requestsFromOthers": {"userId": ["requestId"], "2": [33, 22]}
 }
