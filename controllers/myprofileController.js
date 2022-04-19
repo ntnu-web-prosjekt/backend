@@ -1,5 +1,4 @@
 const User = require("../schemas/myProfileSchema.js");
-const bcrypt = require("bcryptjs");
 
 const getUserInfo = async (req, res) => {
   try {
@@ -42,7 +41,7 @@ const getUserDetails = async (req, res) => {
 //needs cleanup, check logic
 const updateUserPwd = async (req, res) => {
   const oldPassword = await User.findById(req.body.id).select("password");
-  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = passwordHash.generate(oldPassword);
 
   if (req.body.password !== req.body.confirmPassword) {
     res
@@ -51,10 +50,12 @@ const updateUserPwd = async (req, res) => {
     return;
   }
 
-  const confirmPassword = await bcrypt.hash(req.body.confirmPassword, salt);
-  const newPassword = await bcrypt.hash(req.body.newPassword, salt);
+  // const hashConfirmPwd = await hashedPassword.generate(
+  //   req.body.confirmPassword
+  // );
+  const hashNewPwd = await hashedPassword.generate(req.body.newPassword);
 
-  if (oldPassword !== confirmPassword) {
+  if (passwordHash.verify(req.body.confirmPassword, oldPassword)) {
     res.status(400).send("Passwords do not match");
     return;
   }
@@ -63,7 +64,7 @@ const updateUserPwd = async (req, res) => {
       { _id: req.body.id },
       {
         $set: {
-          password: newPassword,
+          password: hashNewPwd,
         },
       }
     );
@@ -88,7 +89,7 @@ const updateUserInfo = async (req, res) => {
     res.status(403).send("Something went wrong, please try again later");
     return;
   }
-    // change to then then then, await is to slow - lefty
+  // change to then then then, await is to slow - lefty
   try {
     const updateInfo = await User.findByIdAndUpdate(req.body.id, {
       $set: updateQuery.details,
