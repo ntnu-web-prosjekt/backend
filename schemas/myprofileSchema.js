@@ -18,6 +18,7 @@ const myProfileSchema = new mongoose.Schema(
     ownedrequests: { type: Array, default: [] },
     appliedRequests: { type: mongoose.Schema.Types.Mixed, default: {} },
     offersFromOthers: { type: mongoose.Schema.Types.Mixed, default: {} },
+    requestingYourHelp: { type: mongoose.Schema.Types.Mixed, default: {} },
     notes: { type: mongoose.Schema.Types.Mixed, default: {} },
   },
   { minimize: false }

@@ -1,5 +1,5 @@
 const express = require("express");
-const dotenv = require("dotenv").config();
+require("dotenv").config();
 const connectDB = require("./connectDB");
 var cors = require("cors");
 
@@ -7,6 +7,7 @@ var cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const User = require("./schemas/myProfileSchema");
 
 //Enable all cors requests
 app.use(cors());
@@ -27,4 +28,26 @@ app.use("/requests", require("./routers/requestsRouter.js"));
 app.use("/catalogue", require("./routers/catalogueRouter.js"));
 app.use("/finduser", require("./routers/finduserRouter.js")); // Finding users / viewing their profile
 app.use("/myprofile", require("./routers/myprofileRouter.js")); // The logged in user profile
-app.use("/jwt", require("./routers/jwtRouter.js")); // JWT
+
+// Start Auth
+const cors = require("cors");
+app.use(cors());
+
+function verifyLogin(credentials) {
+  var passwordHash = require("password-hash");
+  var username = credentials.username;
+  var password = credentials.password;
+  var passwordFromDatabase;
+
+  User.findOne({ email: username }, "password").then((res) => {
+    passwordFromDatabase = res.password;
+    console.log(username, password, passwordFromDatabase);
+    return passwordHash.verify(password, passwordFromDatabase);
+  });
+}
+
+app.use("/login", (req, res) => {
+  if (verifyLogin(req.body)) res.send("Success");
+  else res.send("Fail");
+});
+// End Auth

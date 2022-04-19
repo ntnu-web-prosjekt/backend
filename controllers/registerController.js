@@ -1,10 +1,12 @@
 const User = require("../schemas/myprofileSchema.js");
 
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
 
 const registerUser = async (req, res) => {
-  const salt = await bcrypt.genSalt(10);
-  const hashPwd = await bcrypt.hash(req.body.password, salt);
+  // const salt = await bcrypt.genSalt(10);
+  // const hashPwd = await bcrypt.hash(req.body.password, salt);
+  const hashedPassword = passwordHash.generate(password);
+  const hashPwd = await hashedPassword.generate(req.body.password);
 
   //check if the user already exists
   const emailExists = await User.findOne({ email: req.body.email });

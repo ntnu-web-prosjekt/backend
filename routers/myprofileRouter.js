@@ -1,20 +1,26 @@
 const express = require("express");
 const router = express.Router();
-const { doSomeTest } = require("../controllers/myprofileController.js");
+const {
+  getUserInfo,
+  getUserDetails,
+  updateUserInfo,
+  updateUserPwd,
+  logoutUser,
+} = require("../controllers/myprofileController.js");
 
 // GET - retrives the public data about the logged in user
-router.get("/view", doSomeTest);
+router.get("/view", getUserInfo);
 
 // GET - retrives all data about the logged in user for making changes
-router.get("/settings", doSomeTest);
+router.get("/settings", getUserDetails);
 
 // PUT - saves changes made to the signed in users profile data
-router.put("/settings/update/data", doSomeTest);
+router.put("/settings/update/data", updateUserInfo);
 
 // PUT - updates the signed in users password
-router.put("/settings/update/pwd", doSomeTest);
+router.put("/settings/update/pwd", updateUserPwd);
 
 // POST - signing out the user
-router.post("/signout", doSomeTest);
+router.post("/signout", logoutUser);
 
 module.exports = router;
