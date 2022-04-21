@@ -4,7 +4,7 @@ const passwordHash = require("password-hash");
 // const bcrypt = require("bcryptjs");
 
 const registerUser = async (req, res) => {
-  console.log("Started registration of user");
+  console.log("Started registration of user:", req.body.email);
   // const salt = await bcrypt.genSalt(10);
   // const hashPwd = await bcrypt.hash(req.body.password, salt);
   const hashPwd = passwordHash.generate(req.body.password);
@@ -36,8 +36,10 @@ const registerUser = async (req, res) => {
 
   try {
     const savedUser = await user.save();
-    if (savedUser) res.send("success");
-    else res.send("Failed");
+    if (savedUser) {
+      console.log("Success!", req.body.email);
+      res.send("success");
+    } else res.send("Failed", req.body.email);
   } catch (error) {
     res.status(400).send(error.message);
   }
