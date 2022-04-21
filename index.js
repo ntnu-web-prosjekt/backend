@@ -7,7 +7,7 @@ var cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-const User = require("./schemas/myProfileSchema");
+const User = require("./schemas/myprofileSchema");
 
 //Enable all cors requests
 app.use(cors());
