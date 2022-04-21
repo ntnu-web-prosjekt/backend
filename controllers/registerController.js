@@ -1,16 +1,18 @@
 const User = require("../schemas/myprofileSchema.js");
+const passwordHash = require("password-hash");
 
 // const bcrypt = require("bcryptjs");
 
 const registerUser = async (req, res) => {
+  console.log("Started registration of user");
   // const salt = await bcrypt.genSalt(10);
   // const hashPwd = await bcrypt.hash(req.body.password, salt);
-  const hashedPassword = passwordHash.generate(password);
-  const hashPwd = await hashedPassword.generate(req.body.password);
+  const hashPwd = passwordHash.generate(req.body.password);
 
   //check if the user already exists
   const emailExists = await User.findOne({ email: req.body.email });
   if (emailExists) {
+    console.log("email already exists!", req.body.email);
     res.status(400).send("Email already exists");
     return;
   }
@@ -22,7 +24,7 @@ const registerUser = async (req, res) => {
     },
     email: req.body.email,
     phone: req.body.phone,
-    password: hashPwd, // hashed password with bcryptjs
+    password: hashPwd, // hashed password
     degree: req.body.degree,
     university: req.body.university,
     tags: req.body.tags,
@@ -31,9 +33,11 @@ const registerUser = async (req, res) => {
     offersFromOthers: {},
     notes: {},
   });
+
   try {
     const savedUser = await user.save();
-    res.send(savedUser);
+    if (savedUser) res.send("success");
+    else res.send("Failed");
   } catch (error) {
     res.status(400).send(error.message);
   }

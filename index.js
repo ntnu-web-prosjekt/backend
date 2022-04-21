@@ -21,7 +21,7 @@ connectDB();
 
 // Serving routes
 app.use("/stats", require("./routers/statsRouter.js"));
-app.use("/login", require("./routers/loginRouter.js"));
+// app.use("/login", require("./routers/loginRouter.js"));
 app.use("/register", require("./routers/registerRouter.js"));
 app.use("/dashboard", require("./routers/dashboardRouter.js"));
 app.use("/requests", require("./routers/requestsRouter.js"));
@@ -30,21 +30,36 @@ app.use("/finduser", require("./routers/finduserRouter.js")); // Finding users /
 app.use("/myprofile", require("./routers/myprofileRouter.js")); // The logged in user profile
 
 // Start Auth
-function verifyLogin(credentials) {
+async function verifyLogin(credentials) {
   var passwordHash = require("password-hash");
-  var username = credentials.username;
-  var password = credentials.password;
+  if (credentials.username) var username = credentials.username;
+  if (credentials.password) var password = credentials.password;
   var passwordFromDatabase;
 
-  User.findOne({ email: username }, "password").then((res) => {
-    passwordFromDatabase = res.password;
-    console.log(username, password, passwordFromDatabase);
-    return passwordHash.verify(password, passwordFromDatabase);
-  });
+  if (username !== null && password !== null)
+    return User.findOne({ email: username }, "password").then((res) => {
+      if (res) {
+        passwordFromDatabase = res.password;
+        return passwordHash.verify(password, passwordFromDatabase);
+      } else return null;
+    });
+  else return null;
 }
 
-app.use("/login", (req, res) => {
-  if (verifyLogin(req.body)) res.send("Success");
-  else res.send("Fail");
+app.use("/login", async (req, res) => {
+  console.log("Login attempt received with username: " + req.body.username);
+  var passwordHash = require("password-hash");
+  const status = await verifyLogin(req.body);
+  if (status) {
+    console.log("Login verified!");
+    User.findOne({ email: req.body.username }).then((mongRes) => {
+      var jsonData = mongRes;
+      jsonData.token = "ThisIsOurToken";
+      res.send(JSON.stringify(jsonData));
+    });
+  } else {
+    console.log("Login failed.");
+    res.send("Fail");
+  }
 });
 // End Auth

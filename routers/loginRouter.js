@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { doSomeTest } = require("../controllers/loginController.js");
+const { verifyLogin } = require("../controllers/loginController.js");
 
 // POST - signing in the user
-router.post("/", doSomeTest);
+router.post("/", verifyLogin);
 
 module.exports = router;
