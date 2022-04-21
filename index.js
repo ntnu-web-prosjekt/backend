@@ -30,9 +30,6 @@ app.use("/finduser", require("./routers/finduserRouter.js")); // Finding users /
 app.use("/myprofile", require("./routers/myprofileRouter.js")); // The logged in user profile
 
 // Start Auth
-const cors = require("cors");
-app.use(cors());
-
 function verifyLogin(credentials) {
   var passwordHash = require("password-hash");
   var username = credentials.username;

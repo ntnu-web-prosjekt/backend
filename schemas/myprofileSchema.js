@@ -24,4 +24,5 @@ const myProfileSchema = new mongoose.Schema(
   { minimize: false }
 );
 
-module.exports = mongoose.model("users", myProfileSchema);
+module.exports =
+  mongoose.models.users || mongoose.model("users", myProfileSchema);
