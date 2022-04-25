@@ -13,7 +13,7 @@ const requestsSchema = new mongoose.Schema({
   subjectLevel: { type: String, required: true },
   examinatorLevel: { type: String, required: true },
   active: { type: Boolean, default: false },
-  examiatorId: { type: Array },
+  examinatorId: { type: Array },
   examinatorApproved: { type: Number, default: null },
 });
 
