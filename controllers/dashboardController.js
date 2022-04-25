@@ -26,13 +26,13 @@ const getDashboardData = async (req, res) => {
     // Jobs that the user have already been approved for
     const activeJobs = await Request.find(
       { examinatorApproved: req.body.user_id },
-      "name startDate"
+      "subjectName startDate"
     );
 
     // Own jobs which have no approved examinator yet
     const ownJobs = await Request.find(
       { ownerId: req.body.user_id, examinatorApproved: null },
-      "name startDate"
+      "subjectName startDate"
     );
 
     res.json({
