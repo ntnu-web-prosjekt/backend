@@ -14,7 +14,7 @@ const requestsSchema = new mongoose.Schema({
   examinatorLevel: { type: String, required: true },
   active: { type: Boolean, default: false },
   examinatorId: { type: Array },
-  examinatorApproved: { type: Number, default: null },
+  examinatorApproved: { type: mongoose.Schema.Types.ObjectId, default: null },
 });
 
 module.exports = mongoose.model("requests", requestsSchema);
