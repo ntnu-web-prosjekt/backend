@@ -11,7 +11,7 @@ const getDashboardData = async (req, res) => {
   try {
     // Checking if the user exists
     const user = await User.findById(
-      req.body.user_id,
+      req.params.user_id,
       "name requestingYourHelp offersFromOthers"
     );
 
