@@ -1,6 +1,5 @@
 const User = require("../schemas/myprofileSchema.js");
 const Request = require("../schemas/requestsSchema.js");
-const mongoose = require('mongoose');
 
 /**
  * Retrieves user data to be shown on dashboard.
@@ -26,13 +25,13 @@ const getDashboardData = async (req, res) => {
 
     // Jobs that the user have already been approved for
     const activeJobs = await Request.find(
-      { examinatorApproved:  mongoose.Types.ObjectId(req.params.user_id) },
+      { examinatorApproved: Number(req.params.user_id) },
       "subjectName startDate"
     );
 
     // Own jobs which have no approved examinator yet
     const ownJobs = await Request.find(
-      { ownerId:  mongoose.Types.ObjectId(req.params.user_id), examinatorApproved: null },
+      { ownerId: Number(req.params.user_id), examinatorApproved: null },
       "subjectName startDate"
     );
 
