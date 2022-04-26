@@ -2,7 +2,7 @@ const Request = require("../schemas/requestsSchema");
 
 const getRequests = async (req, res) => {
   try {
-    const requests = await Request.find();
+    const requests = await Request.find({ ownerId: req.params._id });
     res.send(requests);
   } catch (error) {
     res.status(400).send(error.message);

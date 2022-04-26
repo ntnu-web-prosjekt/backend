@@ -3,7 +3,7 @@ const router = express.Router();
 const { createRequest, getRequests, updateRequest, deleteRequest, getRequest, checkRequestApproved } = require("../controllers/requestsController.js");
 
 // GET - Retrieves the signed in users own requests and undertaken requests
-router.get("/", getRequests);
+router.get("/:_id", getRequests);
 
 // GET - Retrieves who is requesting the signed in users help and who is offering the signed in user help
 //router.get("/inbox", doSomeTest);
