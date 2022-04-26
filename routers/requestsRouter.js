@@ -1,6 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const { createRequest, getRequests, updateRequest, deleteRequest, getRequest, checkRequestApproved } = require("../controllers/requestsController.js");
+const {
+  createRequest,
+  getAllRequests,
+  getRequests,
+  updateRequest,
+  deleteRequest,
+  getRequest,
+  checkRequestApproved,
+} = require("../controllers/requestsController.js");
+
+// GET - Retrieve all requests
+router.get("/", getAllRequests);
 
 // GET - Retrieves the signed in users own requests and undertaken requests
 router.get("/:_id", getRequests);

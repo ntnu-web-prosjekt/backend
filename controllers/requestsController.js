@@ -1,5 +1,14 @@
 const Request = require("../schemas/requestsSchema");
 
+const getAllRequests = async (req, res) => {
+  try {
+    const requests = await Request.find();
+    res.send(requests);
+  } catch (error) {
+    res.status(400).send(error.message);
+  }
+};
+
 const getRequests = async (req, res) => {
   try {
     const requests = await Request.find({ ownerId: req.params._id });
@@ -30,7 +39,11 @@ const createRequest = async (req, res) => {
 
 const updateRequest = async (req, res) => {
   try {
-    const request = await Request.findOneAndUpdate({ _id: req.params._id }, req.body, { new: true });
+    const request = await Request.findOneAndUpdate(
+      { _id: req.params._id },
+      req.body,
+      { new: true }
+    );
     res.send(request);
   } catch (error) {
     res.status(400).send(error);
@@ -58,8 +71,9 @@ const checkRequestApproved = async (req, res) => {
 module.exports = {
   createRequest,
   getRequests,
+  getAllRequests,
   getRequest,
   updateRequest,
   deleteRequest,
-  checkRequestApproved
+  checkRequestApproved,
 };
