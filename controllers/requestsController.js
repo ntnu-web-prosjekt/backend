@@ -46,10 +46,20 @@ const deleteRequest = async (req, res) => {
   }
 };
 
+const checkRequestApproved = async (req, res) => {
+  try {
+    const request = await Request.find({ examinatorApproved: req.params._id });
+    res.send(request);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
 module.exports = {
   createRequest,
   getRequests,
   getRequest,
   updateRequest,
-  deleteRequest
+  deleteRequest,
+  checkRequestApproved
 };

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { createRequest, getRequests, updateRequest, deleteRequest, getRequest } = require("../controllers/requestsController.js");
+const { createRequest, getRequests, updateRequest, deleteRequest, getRequest, checkRequestApproved } = require("../controllers/requestsController.js");
 
 // GET - Retrieves the signed in users own requests and undertaken requests
 router.get("/", getRequests);
@@ -25,5 +25,7 @@ router.put("/update/_id", updateRequest);
 
 // DELETE - Deletes an existing request
 router.delete("/delete/:_id", deleteRequest);
+
+router.get("/check/:_id", checkRequestApproved);
 
 module.exports = router;
