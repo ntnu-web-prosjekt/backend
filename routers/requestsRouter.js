@@ -20,7 +20,7 @@ router.get("/:_id", getRequests);
 //router.get("/inbox", doSomeTest);
 
 // GET - Get details/info of a request
-router.get("/:_id", getRequest);
+router.get("/view/:_id", getRequest);
 
 // POST - Creates a new request // HENRIK😎
 router.post("/create", createRequest);
