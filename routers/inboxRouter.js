@@ -3,7 +3,7 @@ const router = express.Router();
 const { getInboxData, acceptRequest, acceptOffer, declineRequest, declineOffer } = require("../controllers/inboxController.js");
 
 // GET - Retrieves the signed in users requests for help and offers for help
-router.get("/view/:id", getInboxData);
+router.get("/view", getInboxData);
 
 // PUT - Accept to help someone with their request
 router.put("/accept/request", acceptRequest);

@@ -9,11 +9,29 @@ const Request = require("../schemas/requestsSchema.js");
  */
 const getInboxData = async (req, res) => {
     try {
+        const data = await Request.find({ownerId: req.body.ownerId, examinatorApproved: null, examinatorId: {$not: {$size: 0} }}, "startDate endDate subjectName examinatorId");
+        const userNames = await User.find({}, "_id name");
+        
+        // Updates the data collection so the examinatorId also includes the name of the examinator separated by a ::
+        data.forEach(subject => {
+            subject.examinatorId.forEach((userId, i) => {
+                userNames.forEach((username, j) => {
+                    if(userId == username._id){
+                        userId = `${userId}::${username.name.firstName} ${username.name.lastName}`;
+                        subject.examinatorId[i] = userId;
+                    }
+                })
+            })
+        })
 
-        // RETRIVE THE INBOX DATA IN A FORMAT WHICH CAN BE USED DIRECTLY ON FRONT-END (DONT SEND USERS ID AND REQUEST ID)
+      if(data && userNames){
+          res.json(data);
+      }
 
     } catch (error) {
-
+        res.json({
+            "msg": error.message
+        });
     }
 };
 
@@ -49,11 +67,13 @@ const acceptRequest = async (req, res) => {
 */
 const acceptOffer = async (req, res) => {
     try {
+        // Update the request with new examinatorApproved
         const updateRequest = await Request.findByIdAndUpdate(req.body.requestId, {examinatorApproved: req.body.examinatorId});
 
-        // REMOVE THIS OFFER FROM THE SIGNED IN USERS "offersFromOthers"
+        // Remove the examinator from the application list (examinatorId)
+        const removeExaminator = await Request.updateOne({_id: req.body.requestId}, {$pull: {examinatorId: req.body.examinatorId}});
 
-        if(updateRequest){
+        if(updateRequest && removeExaminator){
             res.json({
                 "msg": "Success"
             });
@@ -87,9 +107,19 @@ const declineRequest = async (req, res) => {
 */
 const declineOffer = async (req, res) => {
     try {
-        // REMOVE THE OFFER FROM THE SIGNED IN USERS (offersFromsOthers)
-    } catch (error) {
+        // Remove the examinator from the application list (examinatorId)
+        const removeExaminator = await Request.updateOne({_id: req.body.requestId}, {$pull: {examinatorId: req.body.examinatorId}});
 
+        if(removeExaminator){
+            res.json({
+                "msg": "Success"
+            });
+        } 
+
+    } catch (error) {
+        res.json({
+            "msg": error.message
+        });
     }
 };
 
