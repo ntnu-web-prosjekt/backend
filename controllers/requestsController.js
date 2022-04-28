@@ -68,6 +68,20 @@ const checkRequestApproved = async (req, res) => {
   }
 };
 
+const applyRequest = async (req, res) => {
+  try {
+    const apply = await Request.updateOne({_id: req.body.requestId}, {$push: { examinatorId: req.body.examinatorId }});
+
+    if(apply){
+      res.json({
+        "msg": "Success"
+      });
+    };
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
 module.exports = {
   createRequest,
   getRequests,
@@ -76,4 +90,5 @@ module.exports = {
   updateRequest,
   deleteRequest,
   checkRequestApproved,
+  applyRequest
 };
