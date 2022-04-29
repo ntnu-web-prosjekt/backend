@@ -79,17 +79,22 @@ const checkRequestApproved = async (req, res) => {
 const applyRequest = async (req, res) => {
   try {
     const alreadyApplied = await Request.find({_id: req.body.requestId, examinatorId: req.body.examinatorId});
-    
+    const ownRequest = await Request.find({_id: req.body.requestId, ownerId: req.body.examinatorId});
+
     if(alreadyApplied.length > 0){
       res.json({
-        "msg": "Already applied"
+        "msg": "You have already applied for this request."
+      });
+    } else if(ownRequest.length == 1 ){
+      res.json({
+        "msg": "You cannot apply for your own request!"
       });
     } else {
       const apply = await Request.updateOne({_id: req.body.requestId}, {$push: { examinatorId: req.body.examinatorId }});
       
       if(apply){
         res.json({
-        "msg": "Success"
+        "msg": "Successfully applied for this request."
         });
       }
     }
