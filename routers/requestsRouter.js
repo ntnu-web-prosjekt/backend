@@ -8,6 +8,7 @@ const {
   deleteRequest,
   getRequest,
   checkRequestApproved,
+  applyRequest
 } = require("../controllers/requestsController.js");
 
 // GET - Retrieve all requests
@@ -38,5 +39,8 @@ router.put("/update/_id", updateRequest);
 router.delete("/delete/:_id", deleteRequest);
 
 router.get("/check/:_id", checkRequestApproved);
+
+// PUT - Apply for a request
+router.put("/apply", applyRequest);
 
 module.exports = router;

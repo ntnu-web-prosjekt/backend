@@ -76,6 +76,28 @@ const checkRequestApproved = async (req, res) => {
   }
 };
 
+const applyRequest = async (req, res) => {
+  try {
+    const alreadyApplied = await Request.find({_id: req.body.requestId, examinatorId: req.body.examinatorId});
+    
+    if(alreadyApplied.length > 0){
+      res.json({
+        "msg": "Already applied"
+      });
+    } else {
+      const apply = await Request.updateOne({_id: req.body.requestId}, {$push: { examinatorId: req.body.examinatorId }});
+      
+      if(apply){
+        res.json({
+        "msg": "Success"
+        });
+      }
+    }
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
 module.exports = {
   createRequest,
   getRequests,
@@ -84,4 +106,5 @@ module.exports = {
   updateRequest,
   deleteRequest,
   checkRequestApproved,
+  applyRequest
 };
