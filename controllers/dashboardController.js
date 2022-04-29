@@ -39,7 +39,7 @@ const getDashboardData = async (req, res) => {
       userInfo: user,
       activeJobs: activeJobs,
       ownJobs: ownJobs,
-      waitingForReply: checkForWaitingReplies(user),
+      waitingForReply: await checkForWaitingReplies(req.params.user_id)
     });
   } catch (error) {
     res.json({
@@ -54,11 +54,10 @@ const getDashboardData = async (req, res) => {
  * @param Object $userData The users data
  * @return Boolean True or false based on if the users have waiting replies.
  */
-const checkForWaitingReplies = (userData) => {
-  if (
-    Object.entries(userData.offersFromOthers).length === 0 &&
-    Object.entries(userData.requestingYourHelp).length === 0
-  ) {
+const checkForWaitingReplies = async (userId) => {
+  const checkRequests = await Request.find({ownerId: userId, examinatorApproved: { $eq: null }, examinatorId: { $exists: true, $ne: [] }});
+  
+  if(checkRequests.length == 0){
     return false;
   } else {
     return true;
