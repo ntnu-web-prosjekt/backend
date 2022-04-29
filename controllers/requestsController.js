@@ -1,4 +1,5 @@
 const Request = require("../schemas/requestsSchema");
+const User = require("../schemas/myprofileSchema.js");
 
 const getAllRequests = async (req, res) => {
   try {
@@ -21,7 +22,14 @@ const getRequests = async (req, res) => {
 const getRequest = async (req, res) => {
   try {
     const request = await Request.findById(req.params._id);
-    res.send(request);
+    const userName = await User.findById(request.ownerId, "name email");
+
+    let requestCopy = JSON.parse(JSON.stringify(request));
+    requestCopy["username"] = userName.name.firstName + " " + userName.name.lastName;
+    requestCopy["email"] = userName.email;
+
+    res.send(requestCopy);
+
   } catch (error) {
     res.status(400).send(error.message);
   }
