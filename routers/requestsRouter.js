@@ -26,7 +26,7 @@ router.get("/view/:_id", getRequest);
 router.post("/create", createRequest);
 
 // PUT - Updates an existing request
-router.put("/update/_id", updateRequest);
+router.put("/update/:_id", updateRequest);
 
 // PUT - Accepts a request in the inbox
 //router.put("/accept/request/:id", doSomeTest);

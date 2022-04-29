@@ -9,7 +9,7 @@ const Request = require("../schemas/requestsSchema.js");
  */
 const getInboxData = async (req, res) => {
     try {
-        const data = await Request.find({ownerId: req.body.ownerId, examinatorApproved: null, examinatorId: {$not: {$size: 0} }}, "startDate endDate subjectName examinatorId");
+        const data = await Request.find({ownerId: req.params._id, examinatorApproved: null, examinatorId: {$not: {$size: 0} }}, "startDate endDate subjectName examinatorId");
         const userNames = await User.find({}, "_id name");
         
         // Updates the data collection so the examinatorId also includes the name of the examinator separated by a ::
