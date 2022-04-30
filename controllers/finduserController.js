@@ -78,8 +78,86 @@ const getSpecificUser = async (req, res) => {
   }
 };
 
+
+/**
+ * Retrieves notes belonging to a specific user.
+ *
+ * @param Object $req The request object
+ * @param Object $res The response object
+ */
+ const getReview = async (req, res) => {
+  try {
+    const review = await User.find({_id: req.params.id}, "notes");
+    
+    if (review.length === 0) {
+      res.json({
+        "msg": "Reviews could not be retrieved"
+      });
+
+    } else {
+      res.json(review);
+    }
+
+  } catch (error) {
+    res.json({
+      msg: error.message
+    });
+  }
+};
+
+/**
+ * Retrieves data about a specific user.
+ * 
+ * Example of body:
+ * {
+ *   "userId": "624581d44a155b889f2b20e4",
+ *  "ownerId": "624581b44a155b889f2b20e1",
+ *   "reviewText": "Very good and professional."
+ * }
+ *
+ * @param Object $req The request object
+ * @param Object $res The response object
+ */
+ const updateReview = async (req, res) => {
+  try {
+    // The ID of the user we are reviewing
+    const userId = req.body.userId;
+
+    // The review text of this user
+    const reviewText = req.body.reviewText;
+
+    const body = {};
+    body[userId] = reviewText;
+
+    // Finding the user who is writing the review text
+    const updateUsersNotes = await User.findById(req.body.ownerId);
+
+    // Preparing data to be updated in DB
+    updateUsersNotes.set({
+      notes: {
+        ...updateUsersNotes.notes,
+        ...body
+      }
+    })
+
+    // Updating the note in the DB
+    await updateUsersNotes.save();
+
+    res.json({
+      "msg": "Success"
+    });
+
+  } catch (error) {
+    res.json({
+      "msg": error.message
+    }) 
+  }
+};
+
 module.exports = {
   doSomeTest,
   getAllUsers,
   getSpecificUser,
+  getReview,
+  updateReview
 };
