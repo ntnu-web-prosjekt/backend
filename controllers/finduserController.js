@@ -87,7 +87,7 @@ const getSpecificUser = async (req, res) => {
  */
  const getReview = async (req, res) => {
   try {
-    const review = await User.find({_id: req.params.id}, "notes");
+    const review = await User.findOne({_id: req.params.id}, "notes");
     
     if (review.length === 0) {
       res.json({
