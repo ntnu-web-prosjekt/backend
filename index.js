@@ -24,6 +24,7 @@ app.use("/stats", require("./routers/statsRouter.js"));
 // app.use("/login", require("./routers/loginRouter.js"));
 app.use("/register", require("./routers/registerRouter.js"));
 app.use("/dashboard", require("./routers/dashboardRouter.js"));
+app.use("/inbox", require("./routers/inboxRouter.js"));
 app.use("/requests", require("./routers/requestsRouter.js"));
 app.use("/catalogue", require("./routers/catalogueRouter.js"));
 app.use("/finduser", require("./routers/finduserRouter.js")); // Finding users / viewing their profile
