@@ -50,8 +50,20 @@ const getAllUsers = async (req, res) => {
  */
  const getMatchingUsers = async (req, res) => {
   try {
-    // Retrieving user data
-    const users = await User.find({"name.firstName":  { "$regex": req.params.firstname, "$options": "i" }, "name.lastName":  { "$regex": req.params.lastname, "$options": "i" } }, "name university degree tags");
+    let users;
+
+    if (req.params.firstname == "-" && req.params.lastname == "-") {
+      // Retrieving all users data
+      users = await User.find({}, "name university degree tags");
+    }
+    else if (req.params.lastname == "-") {
+      // Retrieving user data based on firstnames only
+      users = await User.find({ "name.firstName": { "$regex": req.params.firstname, "$options": "i" } }, "name university degree tags");
+    }
+    // Retrieving user data based on input firstname and lastname
+    else {
+      users = await User.find({ "name.firstName": { "$regex": req.params.firstname, "$options": "i" }, "name.lastName": { "$regex": req.params.lastname, "$options": "i" } }, "name university degree tags");
+    }
 
     if (users.length === 0) {
       res.json({
