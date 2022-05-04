@@ -5,7 +5,6 @@ const {
   getUserDetails,
   updateUserInfo,
   updateUserPwd,
-  logoutUser,
 } = require("../controllers/myprofileController.js");
 
 // GET - retrives the public data about the logged in user
@@ -19,8 +18,5 @@ router.put("/settings/update/data", updateUserInfo);
 
 // PUT - updates the signed in users password
 router.put("/settings/update/pwd", updateUserPwd);
-
-// POST - signing out the user
-router.post("/signout", logoutUser);
 
 module.exports = router;

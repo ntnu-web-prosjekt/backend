@@ -78,13 +78,13 @@ const updateUserPwd = async (req, res) => {
 const updateUserInfo = async (req, res) => {
   const updateQuery = {};
 
-  if (!req.body.details) {
+  if (!req.body) {
     res.status(400).send("No details to update");
     return;
   }
 
-  if (req.body.details) {
-    updateQuery.details = req.body.details;
+  if (req.body) {
+    updateQuery.details = req.body;
   } else {
     res.status(403).send("Something went wrong, please try again later");
     return;
@@ -94,7 +94,7 @@ const updateUserInfo = async (req, res) => {
     const updateInfo = await User.findByIdAndUpdate(req.body.id, {
       $set: updateQuery.details,
     });
-    console.log(req.body.details);
+    console.log(req.body);
     res.json(updateInfo);
     // res.redirect("/myprofile/settings");
   } catch (error) {
@@ -102,13 +102,9 @@ const updateUserInfo = async (req, res) => {
   }
 };
 
-// not started yet
-const logoutUser = async (req, res) => {};
-
 module.exports = {
   getUserInfo,
   getUserDetails,
   updateUserInfo,
   updateUserPwd,
-  logoutUser,
 };
