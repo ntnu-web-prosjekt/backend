@@ -57,8 +57,14 @@ const getAllUsers = async (req, res) => {
       users = await User.find({}, "name university degree tags");
     }
     else if (req.params.lastname == "-") {
-      // Retrieving user data based on firstnames only
+      // Retrieving user data based on one parameter only (firstname)
       users = await User.find({ "name.firstName": { "$regex": req.params.firstname, "$options": "i" } }, "name university degree tags");
+      usersLastname = await User.find({ "name.lastName": { "$regex": req.params.firstname, "$options": "i" } }, "name university degree tags");
+
+      // If there is results for users lastname
+      usersLastname.forEach(element => {
+        users.push(element);
+      });
     }
     // Retrieving user data based on input firstname and lastname
     else {
