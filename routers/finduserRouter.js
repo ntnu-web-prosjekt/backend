@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { getAllUsers, getSpecificUser, doSomeTest, getReview, updateReview } = require("../controllers/finduserController.js");
+const { getAllUsers, getSpecificUser, doSomeTest, getMatchingUsers, getReview, updateReview } = require("../controllers/finduserController.js");
 
 // GET - Retrieves all users name, university, title, fulfilled requests and tags
 router.get("/view", getAllUsers);
+
+// GET - Retrieves all users matching the input name
+router.get("/search/:firstname/:lastname", getMatchingUsers);
 
 // GET - View the user profile of a specific user and retrieve the signed
 //       in users requests which does not yet have a second examinator

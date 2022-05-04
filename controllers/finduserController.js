@@ -43,6 +43,31 @@ const getAllUsers = async (req, res) => {
 };
 
 /**
+ * Retrieves all users data to be shown on Find User page.
+ *
+ * @param Object $req The request object
+ * @param Object $res The response object
+ */
+ const getMatchingUsers = async (req, res) => {
+  try {
+    // Retrieving user data
+    const users = await User.find({"name.firstName":  { "$regex": req.params.firstname, "$options": "i" }, "name.lastName":  { "$regex": req.params.lastname, "$options": "i" } }, "name university degree tags");
+
+    if (users.length === 0) {
+      res.json({
+        "msg": "No users found"
+      })
+    } else {
+      res.json(users);
+    }
+  } catch (error) {
+    res.json({
+      msg: error.message,
+    });
+  }
+};
+
+/**
  * Retrieves data about a specific user.
  *
  * @param Object $req The request object
@@ -156,6 +181,7 @@ const getSpecificUser = async (req, res) => {
 
 module.exports = {
   doSomeTest,
+  getMatchingUsers,
   getAllUsers,
   getSpecificUser,
   getReview,

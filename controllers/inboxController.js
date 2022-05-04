@@ -72,7 +72,7 @@ const acceptOffer = async (req, res) => {
 
         // Remove the examinator from the application list (examinatorId)
         const removeExaminator = await Request.updateOne({_id: req.body.requestId}, {$pull: {examinatorId: req.body.examinatorId}});
-
+        
         if(updateRequest && removeExaminator){
             res.json({
                 "msg": "Success"
