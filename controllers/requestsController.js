@@ -19,6 +19,42 @@ const getRequests = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves the subjects which matches search query
+ *
+ * @param Object $req The request object
+ * @param Object $res The response object
+ */
+ const getMatchingSubjects = async (req, res) => {
+  try {
+    let requests;
+
+    if (req.params.subjectname == "-") {
+      // Retrieving all request data
+      requests = await Request.find({examinatorApproved: null});
+    }
+    // Retrieving request data based on query
+    else {
+      requests = await Request.find({ subjectName: { "$regex": req.params.subjectname, "$options": "i" }, examinatorApproved: null });
+    }
+
+    if (requests.length === 0) {
+      res.json({
+        "msg": "No requests found"
+      })
+    } else {
+      res.json(requests);
+    }
+  } catch (error) {
+    res.json({
+      msg: error.message,
+    });
+  }
+};
+
+
+
+
 const getRequest = async (req, res) => {
   try {
     const request = await Request.findById(req.params._id);
@@ -111,5 +147,6 @@ module.exports = {
   updateRequest,
   deleteRequest,
   checkRequestApproved,
-  applyRequest
+  applyRequest,
+  getMatchingSubjects
 };

@@ -8,7 +8,8 @@ const {
   deleteRequest,
   getRequest,
   checkRequestApproved,
-  applyRequest
+  applyRequest,
+  getMatchingSubjects
 } = require("../controllers/requestsController.js");
 
 // GET - Retrieve all requests
@@ -16,6 +17,9 @@ router.get("/", getAllRequests);
 
 // GET - Retrieves the signed in users own requests and undertaken requests
 router.get("/:_id", getRequests);
+
+// GET - Retrieves all request matching the input subjectname
+router.get("/search/:subjectname", getMatchingSubjects);
 
 // GET - Retrieves who is requesting the signed in users help and who is offering the signed in user help
 //router.get("/inbox", doSomeTest);
