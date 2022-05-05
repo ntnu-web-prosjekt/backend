@@ -61,9 +61,17 @@ const getAllUsers = async (req, res) => {
       users = await User.find({ "name.firstName": { "$regex": req.params.firstname, "$options": "i" } }, "name university degree tags");
       usersLastname = await User.find({ "name.lastName": { "$regex": req.params.firstname, "$options": "i" } }, "name university degree tags");
 
-      // If there is results for users lastname
+      // Storing IDs of users found by firstname
+      let ids = []; 
+      users.forEach(user => {
+        ids.push(user._id.toString());
+      });
+
+      // Looping trough results of usernames, if the same user was found earlier it will not be added to the users array
       usersLastname.forEach(element => {
-        users.push(element);
+        if(!ids.includes(element._id.toString())){
+          users.push(element);
+        }
       });
     }
     // Retrieving user data based on input firstname and lastname
